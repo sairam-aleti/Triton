@@ -1,0 +1,32 @@
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DB_PATH: /app/db/allocation.db
+      DATA_DIR: /app/data
+    volumes:
+      - db:/app/db            # SQLite store survives restarts
+      - ./data:/app/data      # data pack, seeded on first start
+    extra_hosts: ["host.docker.internal:host-gateway"]   # Ollama on the host
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      retries: 5
+    command: uvicorn src.api:app --host 0.0.0.0 --port 8000
+
+  ui:
+    build: .
+    ports: ["8501:8501"]
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+
+volumes:
+  db:
