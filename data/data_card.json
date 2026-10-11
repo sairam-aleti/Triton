@@ -1,0 +1,12 @@
+{
+  "name": "synthetic-multiplant",
+  "version": "1.0",
+  "seed": 42,
+  "planning_start": "2026-10-12",
+  "row_counts": {
+    "orders": 150,
+    "plants": 15,
+    "transport_duties": 36,
+    "capacity_events": 1
+  }
+}
