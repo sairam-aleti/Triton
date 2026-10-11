@@ -1,0 +1,79 @@
+{
+  "run_id": "al-add07b",
+  "request": "Put order O-007 in Plant A",
+  "created_at": "2026-10-11T09:06:56.175879+00:00",
+  "answer_type": "refused",
+  "steps": [
+    {
+      "agent": "intake",
+      "tool": "parse_intent",
+      "input": "Put order O-007 in Plant A",
+      "output": {
+        "intent": "scenario",
+        "order_id": "O-007",
+        "weights_cost": null,
+        "weights_carbon": null,
+        "capacity_changes": [],
+        "carbon_cut_pct": null,
+        "force_plant": "A",
+        "asks_to_break_rule": false,
+        "asks_weight_change_without_values": false,
+        "claimed_numbers": []
+      },
+      "duration_ms": 0.2,
+      "method": "rules",
+      "llm_calls": 0,
+      "tokens": 0
+    },
+    {
+      "agent": "guard",
+      "tool": "check_request",
+      "input": {
+        "intent": "scenario"
+      },
+      "output": {
+        "decision": "refused",
+        "message": "Plant A cannot build order O-007: it cannot make product P4 or has no route to Germany. Assigning it there would break the eligibility rule."
+      },
+      "duration_ms": 0.1
+    },
+    {
+      "agent": "writer",
+      "tool": "write_summary",
+      "input": {
+        "answer_type": "refused"
+      },
+      "output": {
+        "text": "Plant A cannot build order O-007: it cannot make product P4 or has no route to Germany. Assigning it there would break the eligibility rule."
+      },
+      "duration_ms": 0.0,
+      "method": "template",
+      "llm_calls": 0,
+      "tokens": 0
+    },
+    {
+      "agent": "checker",
+      "tool": "number_check",
+      "input": null,
+      "output": {
+        "ok": true,
+        "numbers_checked": 0,
+        "unverified": [],
+        "faithfulness": 1.0,
+        "note": "fixed message, not generated"
+      },
+      "duration_ms": 0.0
+    }
+  ],
+  "llm_calls": 0,
+  "tokens": 0,
+  "latency_ms": 4.3,
+  "data_version": 4,
+  "config": {
+    "llm_provider": "gemini",
+    "llm_model": "gemini-3.8-flash",
+    "mock_llm": true,
+    "solver": "cpsat",
+    "solver_time_limit_s": 10
+  }
+}

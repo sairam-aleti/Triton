@@ -1,0 +1,378 @@
+{
+  "run_id": "al-1cc791",
+  "request": "Plant B loses 30% capacity. Re-plan.",
+  "created_at": "2026-10-11T09:06:37.672336+00:00",
+  "answer_type": "scenario",
+  "steps": [
+    {
+      "agent": "intake",
+      "tool": "parse_intent",
+      "input": "Plant B loses 30% capacity. Re-plan.",
+      "output": {
+        "intent": "replan",
+        "order_id": null,
+        "weights_cost": null,
+        "weights_carbon": null,
+        "capacity_changes": [
+          {
+            "plant": "B",
+            "loss_pct": 30.0,
+            "weeks": null
+          }
+        ],
+        "carbon_cut_pct": null,
+        "force_plant": null,
+        "asks_to_break_rule": false,
+        "asks_weight_change_without_values": false,
+        "claimed_numbers": []
+      },
+      "duration_ms": 0.4,
+      "method": "rules",
+      "llm_calls": 0,
+      "tokens": 0
+    },
+    {
+      "agent": "guard",
+      "tool": "check_request",
+      "input": {
+        "intent": "replan"
+      },
+      "output": {
+        "decision": "proceed",
+        "message": ""
+      },
+      "duration_ms": 0.1
+    },
+    {
+      "agent": "optimiser",
+      "tool": "solve_allocation",
+      "input": {
+        "weights": {
+          "cost": 0.7,
+          "carbon": 0.3,
+          "lateness": 1.0
+        },
+        "scenario": {}
+      },
+      "output": {
+        "label": "base plan",
+        "status": "FEASIBLE",
+        "gap": 0.01631,
+        "solve_ms": 3333.7,
+        "kpis": {
+          "total_cost": 703328.88,
+          "total_carbon_t": 83.147,
+          "late_orders": 22,
+          "unserved_orders": 0,
+          "orders_planned": 150,
+          "orders_total": 150,
+          "plant_utilisation": {
+            "A": 0.3547,
+            "B": 0.658,
+            "C": 0.8118
+          },
+          "orders_by_plant": {
+            "A": 49,
+            "B": 47,
+            "C": 54
+          }
+        }
+      },
+      "duration_ms": 3355.6
+    },
+    {
+      "agent": "scenario",
+      "tool": "solve_plan",
+      "input": {
+        "label": "after capacity change",
+        "capacity_changes": [
+          {
+            "plant": "B",
+            "loss_pct": 30.0,
+            "weeks": null
+          }
+        ]
+      },
+      "output": {
+        "plan_id": "p1",
+        "label": "after capacity change",
+        "status": "FEASIBLE",
+        "kpis": {
+          "total_cost": 698760.34,
+          "total_carbon_t": 91.756,
+          "late_orders": 29,
+          "unserved_orders": 0,
+          "orders_planned": 150,
+          "orders_total": 150,
+          "plant_utilisation": {
+            "A": 0.4261,
+            "B": 0.7773,
+            "C": 0.7919
+          },
+          "orders_by_plant": {
+            "A": 57,
+            "B": 37,
+            "C": 56
+          }
+        }
+      },
+      "duration_ms": 2829.0
+    },
+    {
+      "agent": "scenario",
+      "tool": "compare_plans",
+      "input": {
+        "base_id": "base",
+        "new_id": "p1"
+      },
+      "output": {
+        "base": "base plan",
+        "new": "after capacity change",
+        "cost_delta": -4568.54,
+        "cost_delta_pct": -0.65,
+        "carbon_delta_t": 8.609,
+        "late_orders_delta": 7,
+        "unserved_delta": 0,
+        "orders_moved": 20,
+        "orders_unchanged_pct": 86.7,
+        "moved_orders_first_10": [
+          {
+            "order_id": "O-003",
+            "from": "B",
+            "to": "A",
+            "cost_delta": -594.24,
+            "carbon_delta_kg": 1392.0,
+            "now_on_time": false
+          },
+          {
+            "order_id": "O-012",
+            "from": "A",
+            "to": "C",
+            "cost_delta": 603.07,
+            "carbon_delta_kg": -305.04,
+            "now_on_time": true
+          },
+          {
+            "order_id": "O-016",
+            "from": "C",
+            "to": "A",
+            "cost_delta": -1552.59,
+            "carbon_delta_kg": 957.6,
+            "now_on_time": false
+          },
+          {
+            "order_id": "O-025",
+            "from": "B",
+            "to": "C",
+            "cost_delta": 315.0,
+            "carbon_delta_kg": -96.6,
+            "now_on_time": true
+          },
+          {
+            "order_id": "O-027",
+            "from": "B",
+            "to": "A",
+            "cost_delta": -158.44,
+            "carbon_delta_kg": 306.99,
+            "now_on_time": true
+          },
+          {
+            "order_id": "O-030",
+            "from": "B",
+            "to": "A",
+            "cost_delta": -1060.39,
+            "carbon_delta_kg": 666.7,
+            "now_on_time": false
+          },
+          {
+            "order_id": "O-043",
+            "from": "C",
+            "to": "A",
+            "cost_delta": -994.43,
+            "carbon_delta_kg": 745.2,
+            "now_on_time": true
+          },
+          {
+            "order_id": "O-044",
+            "from": "C",
+            "to": "A",
+            "cost_delta": -1430.01,
+            "carbon_delta_kg": 882.0,
+            "now_on_time": false
+          },
+          {
+            "order_id": "O-058",
+            "from": "C",
+            "to": "A",
+            "cost_delta": -1639.73,
+            "carbon_delta_kg": 1347.84,
+            "now_on_time": true
+          },
+          {
+            "order_id": "O-064",
+            "from": "B",
+            "to": "C",
+            "cost_delta": 655.2,
+            "carbon_delta_kg": -156.24,
+            "now_on_time": true
+          }
+        ]
+      },
+      "duration_ms": 0.2
+    },
+    {
+      "agent": "scenario",
+      "tool": "agent_summary",
+      "input": null,
+      "output": {
+        "method": "fixed tool sequence",
+        "llm_calls": 0,
+        "tokens": 0,
+        "tool_calls": 2
+      },
+      "duration_ms": 0.0
+    },
+    {
+      "agent": "checker",
+      "tool": "validate_plan",
+      "input": {
+        "plan": "after capacity change"
+      },
+      "output": {
+        "capacity_ok": true,
+        "eligibility_ok": true,
+        "assignment_ok": true,
+        "cost_ok": true,
+        "delivery_ok": false,
+        "late_orders": [
+          {
+            "order_id": "O-001",
+            "plant": "A",
+            "arrival": "2026-11-12",
+            "due": "2026-10-24",
+            "late_days": 19
+          },
+          {
+            "order_id": "O-002",
+            "plant": "B",
+            "arrival": "2026-11-09",
+            "due": "2026-10-26",
+            "late_days": 14
+          },
+          {
+            "order_id": "O-003",
+            "plant": "A",
+            "arrival": "2026-11-12",
+            "due": "2026-10-25",
+            "late_days": 18
+          },
+          {
+            "order_id": "O-004",
+            "plant": "C",
+            "arrival": "2026-11-04",
+            "due": "2026-10-27",
+            "late_days": 8
+          },
+          {
+            "order_id": "O-006",
+            "plant": "C",
+            "arrival": "2026-11-23",
+            "due": "2026-11-13",
+            "late_days": 10
+          },
+          {
+            "order_id": "O-007",
+            "plant": "B",
+            "arrival": "2026-11-02",
+            "due": "2026-10-20",
+            "late_days": 13
+          },
+          {
+            "order_id": "O-008",
+            "plant": "B",
+            "arrival": "2026-11-02",
+            "due": "2026-10-21",
+            "late_days": 12
+          },
+          {
+            "order_id": "O-009",
+            "plant": "B",
+            "arrival": "2026-10-26",
+            "due": "2026-10-22",
+            "late_days": 4
+          },
+          {
+            "order_id": "O-010",
+            "plant": "B",
+            "arrival": "2026-11-09",
+            "due": "2026-11-03",
+            "late_days": 6
+          },
+          {
+            "order_id": "O-011",
+            "plant": "B",
+            "arrival": "2026-11-09",
+            "due": "2026-10-29",
+            "late_days": 11
+          },
+          {
+            "order_id": "O-016",
+            "plant": "A",
+            "arrival": "2026-11-06",
+            "due": "2026-11-03",
+            "late_days": 3
+          },
+          {
+            "order_id": "O-024",
+            "plant": "C",
+            "arrival": "2026-10-31",
+            "due": "2026-10-27",
+            "late_days": 4
+          },
+          "... 17 more"
+        ],
+        "unserved_orders": [],
+        "violations": [],
+        "valid": true
+      },
+      "duration_ms": 235.0
+    },
+    {
+      "agent": "writer",
+      "tool": "write_summary",
+      "input": {
+        "answer_type": "scenario"
+      },
+      "output": {
+        "text": "Plant B loses 30%: the new plan costs 698,760 (-4,569, -0.65%), carbon 91.8 t (+8.6 t), 29 late orders (+7), 0 unserved. 20 orders moved plant; 86.7% of the plan is unchanged. Moves include O-003 B->A, O-012 A->C, O-016 C->A, O-025 B->C, O-027 B->A."
+      },
+      "duration_ms": 0.0,
+      "method": "template",
+      "llm_calls": 0,
+      "tokens": 0
+    },
+    {
+      "agent": "checker",
+      "tool": "number_check",
+      "input": null,
+      "output": {
+        "ok": true,
+        "numbers_checked": 11,
+        "unverified": [],
+        "faithfulness": 1.0
+      },
+      "duration_ms": 0.0
+    }
+  ],
+  "llm_calls": 0,
+  "tokens": 0,
+  "latency_ms": 6426.1,
+  "data_version": 4,
+  "config": {
+    "llm_provider": "gemini",
+    "llm_model": "gemini-3.8-flash",
+    "mock_llm": true,
+    "solver": "cpsat",
+    "solver_time_limit_s": 10
+  }
+}
